@@ -17,6 +17,7 @@ const useCounter = (initialValue=10) => {
 
     return {
         counter,
+        setCounter,
         increment,
         decrement,
         reset
