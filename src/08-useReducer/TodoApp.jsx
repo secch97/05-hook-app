@@ -1,37 +1,24 @@
-import React, { useReducer } from "react";
-import todoReducer from "./todoReducer";
+import React from "react";
 import TodoList from "./TodoList";
 import TodoAdd from "./TodoAdd";
-
-const initialState = [
-  {
-    id: new Date().getTime(),
-    description: "Collect soul stone",
-    done: false,
-  },
-  {
-    id: new Date().getTime() * 3,
-    description: "Collect power stone",
-    done: false,
-  },
-];
+import useTodo from "../hooks/useTodo";
 
 const TodoApp = () => {
-  const [todos, dispatch] = useReducer(todoReducer, initialState);
-
-  const handleAddTodo = (todo) => {
-    console.log(todo);
-  };
-
+  const { todos, handleAddTodo, handleDeleteTodo, handleToggleTodo } =
+    useTodo();
   return (
     <>
       <h1>
-        Todo App: Completed: {10} | Pending: {10}{" "}
+        Todo App: Completed: {(todos.filter((todo)=>todo.done).length)} | Pending: {(todos.filter((todo)=>!todo.done).length)}{" "}
       </h1>
       <hr></hr>
       <div className="row">
         <div className="col-7">
-            <TodoList todos={todos}></TodoList>
+          <TodoList
+            todos={todos}
+            onDeleteTodo={handleDeleteTodo}
+            onToggleTodo={handleToggleTodo}
+          ></TodoList>
         </div>
         <div className="col-5">
           <TodoAdd onAddTodo={handleAddTodo}></TodoAdd>
